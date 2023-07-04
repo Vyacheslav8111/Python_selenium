@@ -19,6 +19,11 @@ class TestAddGroup(unittest.TestCase):
         driver = self.driver
         driver.get("http://localhost/addressbook/")
         driver.find_element(By.NAME, "user").click()
+        driver.find_element(By.NAME, "user").clear()
+        driver.find_element(By.NAME, "user").send_keys("Admin")
+        driver.find_element(By.NAME, "pass").click()
+        driver.find_element(By.NAME, "pass").clear()
+        driver.find_element(By.NAME, "pass").send_keys("secret")
         driver.find_element(By.XPATH, "//input[@value='Login']").click()
         driver.find_element(By.LINK_TEXT, "groups").click()
         driver.find_element(By.NAME, "new").click()
