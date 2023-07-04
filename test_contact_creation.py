@@ -12,21 +12,28 @@ class TestContactCreation(unittest.TestCase):
 	def setUp(self):
 		self.driver = webdriver.Firefox()
 		self.driver.implicitly_wait(30)
-		self.base_url = "https://www.google.com/"
 		self.verificationErrors = []
 		self.accept_next_alert = True
 
 	def test_contact_creation(self):
-		driver = self.driver
-		driver.get("http://localhost/addressbook/")
-		driver.find_element(By.NAME, "user").click()
-		driver.find_element(By.NAME, "user").clear()
-		driver.find_element(By.NAME, "user").send_keys("Admin")
-		driver.find_element(By.NAME, "pass").click()
-		driver.find_element(By.NAME, "pass").clear()
-		driver.find_element(By.NAME, "pass").send_keys("secret")
-		driver.find_element(By.XPATH, "//input[@value='Login']").click()
+		self.open_home_page()
+		self.login()
+		self.create()
+		self.return_to_home_page()
+		self.logout()
+
+	def logout(self):
+		# logout
+		driver.find_element(By.LINK_TEXT, "Logout").click()
+
+	def return_to_home_page(self):
+		# return to home page
+		driver.find_element(By.LINK_TEXT, "home page").click()
+
+	def create(self):
+		# init contact creation
 		driver.find_element(By.LINK_TEXT, "add new").click()
+		# fill contact form
 		driver.find_element(By.NAME, "firstname").click()
 		driver.find_element(By.NAME, "firstname").clear()
 		driver.find_element(By.NAME, "firstname").send_keys("q")
@@ -78,9 +85,22 @@ class TestContactCreation(unittest.TestCase):
 		driver.find_element(By.NAME, "notes").click()
 		driver.find_element(By.NAME, "notes").clear()
 		driver.find_element(By.NAME, "notes").send_keys("test")
+		# submit contact creation
 		driver.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
-		driver.find_element(By.LINK_TEXT, "home page").click()
-		driver.find_element(By.LINK_TEXT, "Logout").click()
+
+	def login(self):
+		# login
+		driver.find_element(By.NAME, "user").click()
+		driver.find_element(By.NAME, "user").clear()
+		driver.find_element(By.NAME, "user").send_keys("Admin")
+		driver.find_element(By.NAME, "pass").click()
+		driver.find_element(By.NAME, "pass").clear()
+		driver.find_element(By.NAME, "pass").send_keys("secret")
+		driver.find_element(By.XPATH, "//input[@value='Login']").click()
+
+	def open_home_page(self):
+		# open home page
+		driver.get("http://localhost/addressbook/")
 
 	def tearDown(self):
 		self.driver.quit()
