@@ -16,7 +16,7 @@ class TestContactCreation(unittest.TestCase):
 		self.verificationErrors = []
 		self.accept_next_alert = True
 
-	def test_contact_creation(self):
+	def test_add_contact(self):
 		self.login()
 		self.create(Contact(firstname="q", middlename="w", lastname="e", nickname="r", title="t", company="y",
 							address="u", home="67767-8778", mobile="56565-325", work="6688", fax="5657678",
@@ -24,7 +24,7 @@ class TestContactCreation(unittest.TestCase):
 							homepage="www.testUI.test", address2="test", notes="test"))
 		self.logout()
 
-	def test_empty_contact_creation(self):
+	def test_add_empty_contact(self):
 		self.login()
 		self.create(Contact(firstname="", middlename="", lastname="", nickname="", title="", company="",
 							address="", home="", mobile="", work="", fax="",
