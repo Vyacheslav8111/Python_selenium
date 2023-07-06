@@ -8,58 +8,57 @@ class ContactHelper:
 		driver = self.app.driver
 		# init contact creation
 		driver.find_element(By.LINK_TEXT, "add new").click()
-		# fill contact form
-		driver.find_element(By.NAME, "firstname").click()
-		driver.find_element(By.NAME, "firstname").clear()
-		driver.find_element(By.NAME, "firstname").send_keys(contact.firstname)
-		driver.find_element(By.NAME, "middlename").click()
-		driver.find_element(By.NAME, "middlename").clear()
-		driver.find_element(By.NAME, "middlename").send_keys(contact.middlename)
-		driver.find_element(By.NAME, "lastname").click()
-		driver.find_element(By.NAME, "lastname").clear()
-		driver.find_element(By.NAME, "lastname").send_keys(contact.lastname)
-		driver.find_element(By.NAME, "nickname").click()
-		driver.find_element(By.NAME, "nickname").clear()
-		driver.find_element(By.NAME, "nickname").send_keys(contact.nickname)
-		driver.find_element(By.NAME, "title").click()
-		driver.find_element(By.NAME, "title").clear()
-		driver.find_element(By.NAME, "title").send_keys(contact.title)
-		driver.find_element(By.NAME, "company").click()
-		driver.find_element(By.NAME, "company").clear()
-		driver.find_element(By.NAME, "company").send_keys(contact.company)
-		driver.find_element(By.NAME, "address").click()
-		driver.find_element(By.NAME, "address").clear()
-		driver.find_element(By.NAME, "address").send_keys(contact.address)
-		driver.find_element(By.NAME, "home").click()
-		driver.find_element(By.NAME, "home").clear()
-		driver.find_element(By.NAME, "home").send_keys(contact.home)
-		driver.find_element(By.NAME, "mobile").click()
-		driver.find_element(By.NAME, "mobile").clear()
-		driver.find_element(By.NAME, "mobile").send_keys(contact.mobile)
-		driver.find_element(By.NAME, "work").click()
-		driver.find_element(By.NAME, "work").clear()
-		driver.find_element(By.NAME, "work").send_keys(contact.work)
-		driver.find_element(By.NAME, "fax").click()
-		driver.find_element(By.NAME, "fax").clear()
-		driver.find_element(By.NAME, "fax").send_keys(contact.fax)
-		driver.find_element(By.NAME, "email").click()
-		driver.find_element(By.NAME, "email").clear()
-		driver.find_element(By.NAME, "email").send_keys(contact.email)
-		driver.find_element(By.NAME, "email2").click()
-		driver.find_element(By.NAME, "email2").clear()
-		driver.find_element(By.NAME, "email2").send_keys(contact.email2)
-		driver.find_element(By.NAME, "email3").click()
-		driver.find_element(By.NAME, "email3").clear()
-		driver.find_element(By.NAME, "email3").send_keys(contact.email3)
-		driver.find_element(By.NAME, "homepage").click()
-		driver.find_element(By.NAME, "homepage").clear()
-		driver.find_element(By.NAME, "homepage").send_keys(contact.homepage)
-		driver.find_element(By.NAME, "address2").click()
-		driver.find_element(By.NAME, "address2").clear()
-		driver.find_element(By.NAME, "address2").send_keys(contact.address2)
-		driver.find_element(By.NAME, "notes").click()
-		driver.find_element(By.NAME, "notes").clear()
-		driver.find_element(By.NAME, "notes").send_keys(contact.notes)
+		self.fill_contact_form(contact)
 		# submit contact creation
 		driver.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
-		#self.return_to_home_page()
+
+	def verify_change_field_value(self, field_name, text):
+		driver = self.app.driver
+		if text is not None:
+			driver.find_element(By.NAME, field_name).click()
+			driver.find_element(By.NAME, field_name).clear()
+			driver.find_element(By.NAME, field_name).send_keys(text)
+
+	def fill_contact_form(self, contact):
+		driver = self.app.driver
+		# fill contact form
+		self.verify_change_field_value("firstname", contact.firstname)
+		self.verify_change_field_value("middlename", contact.middlename)
+		self.verify_change_field_value("lastname", contact.lastname)
+		self.verify_change_field_value("nickname", contact.nickname)
+		self.verify_change_field_value("title", contact.title)
+		self.verify_change_field_value("company", contact.company)
+		self.verify_change_field_value("address", contact.address)
+		self.verify_change_field_value("home", contact.home)
+		self.verify_change_field_value("mobile", contact.mobile)
+		self.verify_change_field_value("work", contact.work)
+		self.verify_change_field_value("work", contact.work)
+		self.verify_change_field_value("fax", contact.fax)
+		self.verify_change_field_value("email", contact.email)
+		self.verify_change_field_value("email2", contact.email2)
+		self.verify_change_field_value("email3", contact.email3)
+		self.verify_change_field_value("homepage", contact.homepage)
+		self.verify_change_field_value("address2", contact.address2)
+		self.verify_change_field_value("notes", contact.notes)
+
+	def modify_first_contact(self, new_contact_data):
+		driver = self.app.driver
+		self.select_first_contact()
+		# open modify_form
+		driver.find_element(By.XPATH, "//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+		# fill contact form
+		self.fill_contact_form(new_contact_data)
+		# submit modification
+		driver.find_element(By.NAME, "update").click()
+		self.return_to_home_page()
+
+	def select_first_contact(self):
+		driver = self.app.driver
+		driver.find_element(By.NAME, "selected[]").click()
+
+	def return_to_home_page(self):
+		driver = self.app.driver
+		driver.find_element(By.XPATH, "//div[@id='content']/div/i/a").click()
+
+
+
