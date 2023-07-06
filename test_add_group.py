@@ -1,25 +1,23 @@
 # -*- coding: utf-8 -*-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-import unittest, time, re
 from group import Group
 from application import Application
+import pytest
 
 
-class TestAddGroup(unittest.TestCase):
-    def setUp(self):
-        self.app = Application()
-        self.driver = webdriver.Firefox()
-    
-    def test_add_group(self):
-        self.app.login(username="Admin", password="secret")
-        self.app.create(Group(name="s", header="a", footer="f"))
-        self.app.logout()
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.close_browser)
+    return fixture
 
-    def test_add_empty_group(self):
-        self.app.login(username="Admin", password="secret")
-        self.app.create(Group(name="", header="", footer=""))
-        self.app.logout()
 
-    def tearDown(self):
-        self.app.close_browser()
+def test_add_group(app):
+    app.login(username="Admin", password="secret")
+    app.group_create(Group(name="s", header="a", footer="f"))
+    app.logout()
+
+
+def test_add_empty_group(app):
+    app.login(username="Admin", password="secret")
+    app.group_create(Group(name="", header="", footer=""))
+    app.logout()
