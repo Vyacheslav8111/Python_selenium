@@ -56,9 +56,22 @@ class ContactHelper:
 		driver = self.app.driver
 		driver.find_element(By.NAME, "selected[]").click()
 
+	def delete_first_contact(self):
+		driver = self.app.driver
+		self.app.open_home_page()
+		self.select_first_contact()
+		# submit modification
+		driver.find_element(By.CSS_SELECTOR, ".left:nth-child(8) > input").click()
+		assert driver.switch_to.alert.text == "Delete 1 addresses?"
+		driver.switch_to.alert.accept()
+
 	def return_to_home_page(self):
 		driver = self.app.driver
 		driver.find_element(By.XPATH, "//div[@id='content']/div/i/a").click()
+
+
+
+
 
 
 
