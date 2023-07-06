@@ -1,10 +1,10 @@
 
 from selenium.webdriver.common.by import By
 
+
 class GroupHelper:
 	def __init__(self, app):
 		self.app = app
-
 
 	def open_groups_page(self):
 		driver = self.app.driver
@@ -32,3 +32,12 @@ class GroupHelper:
 	def return_to_groups_page(self):
 		driver = self.app.driver
 		driver.find_element(By.LINK_TEXT, "group page").click()
+
+	def delete_first_group(self):
+		driver = self.app.driver
+		driver.find_element(By.LINK_TEXT, "groups").click()
+		# select first group
+		driver.find_element(By.NAME, "selected[]").click()
+		# submit deletion
+		driver.find_element(By.NAME, "delete").click()
+		self.return_to_groups_page()

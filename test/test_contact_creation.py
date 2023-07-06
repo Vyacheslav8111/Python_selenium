@@ -4,13 +4,6 @@ from fixture.application import Application
 import pytest
 
 
-@pytest.fixture
-def app(request):
-	fixture = Application()
-	request.addfinalizer(fixture.close_browser)
-	return fixture
-
-
 def test_add_contact(app):
 	app.session.login(username="Admin", password="secret")
 	app.contact.create(Contact(firstname="q", middlename="w", lastname="e", nickname="r", title="t",
