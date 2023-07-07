@@ -53,6 +53,11 @@ class ContactHelper:
 		driver.find_element(By.NAME, "update").click()
 		self.return_to_home_page()
 
+	def count_contact(self):
+		driver = self.app.driver
+		self.app.open_home_page()
+		return len(driver.find_elements(By.NAME, "selected[]"))
+
 	def select_first_contact(self):
 		driver = self.app.driver
 		driver.find_element(By.NAME, "selected[]").click()
