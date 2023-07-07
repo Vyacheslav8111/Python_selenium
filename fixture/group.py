@@ -28,7 +28,6 @@ class GroupHelper:
 			driver.find_element(By.NAME, field_name).send_keys(text)
 
 	def fill_group_form(self, group):
-		#driver = self.app.driver
 		self.verify_change_field_value("group_name", group.name)
 		self.verify_change_field_value("group_header", group.header)
 		self.verify_change_field_value("group_footer", group.footer)
@@ -60,5 +59,3 @@ class GroupHelper:
 		# submit modification
 		driver.find_element(By.NAME, "update").click()
 		self.return_to_groups_page()
-
-

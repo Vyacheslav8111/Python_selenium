@@ -5,5 +5,10 @@ from fixture.application import Application
 @pytest.fixture(scope="session")
 def app(request):
     fixture = Application()
-    request.addfinalizer(fixture.close_browser)
+    fixture.session.login(username="Admin", password="secret")
+
+    def fin():
+        fixture.session.logout()
+        fixture.close_browser()
+    request.addfinalizer(fin)
     return fixture

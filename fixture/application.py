@@ -15,8 +15,5 @@ class Application:
 		driver = self.driver
 		driver.get("http://localhost/addressbook/")
 
-
-
-
 	def close_browser(self):
 		self.driver.quit()
