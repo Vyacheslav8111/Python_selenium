@@ -74,10 +74,3 @@ class ContactHelper:
 	def return_to_home_page(self):
 		driver = self.app.driver
 		driver.find_element(By.XPATH, "//div[@id='content']/div/i/a").click()
-
-
-
-
-
-
-

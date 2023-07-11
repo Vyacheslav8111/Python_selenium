@@ -65,4 +65,3 @@ class GroupHelper:
 		driver = self.app.driver
 		self.open_groups_page()
 		return len(driver.find_elements(By.NAME, "selected[]"))
-
