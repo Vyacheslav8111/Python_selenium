@@ -1,5 +1,6 @@
 
 from selenium.webdriver.common.by import By
+from model.group import Group
 
 
 class GroupHelper:
@@ -65,3 +66,15 @@ class GroupHelper:
 		driver = self.app.driver
 		self.open_groups_page()
 		return len(driver.find_elements(By.NAME, "selected[]"))
+
+	def get_group_list(self):
+		driver = self.app.driver
+		self.open_groups_page()
+		list_groups = []
+		for element in driver.find_elements(By.CSS_SELECTOR, "span.group"):
+			text = element.text
+			id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+			list_groups.append(Group(name=text, id=id))
+		return list_groups
+
+
