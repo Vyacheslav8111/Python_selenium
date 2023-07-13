@@ -13,6 +13,7 @@ class ContactHelper:
 		self.fill_contact_form(contact)
 		# submit contact creation
 		driver.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
+		self.contact_cache = None
 
 	def verify_change_field_value(self, field_name, text):
 		driver = self.app.driver
@@ -53,6 +54,7 @@ class ContactHelper:
 		# submit modification
 		driver.find_element(By.NAME, "update").click()
 		self.return_to_home_page()
+		self.contact_cache = None
 
 	def count_contact(self):
 		driver = self.app.driver
@@ -71,6 +73,7 @@ class ContactHelper:
 		driver.find_element(By.CSS_SELECTOR, ".left:nth-child(8) > input").click()
 		assert driver.switch_to.alert.text == "Delete 1 addresses?"
 		driver.switch_to.alert.accept()
+		self.contact_cache = None
 
 	def return_to_home_page(self):
 		driver = self.app.driver
@@ -78,18 +81,15 @@ class ContactHelper:
 
 	contact_cache = None
 
-
-
 	def get_contact_list(self):
 		if self.contact_cache is None:
 			driver = self.app.driver
 			self.app.open_home_page()
-			list_contacts = []
+			self.contact_cache = []
 			for element in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
 				text = element.text
 				id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-				list_contacts.append(Contact(firstname=text, id=id))
-
-		return list_contacts
+				self.contact_cache.append(Contact(firstname=text, id=id))
+		return list(self.contact_cache)
 
 
