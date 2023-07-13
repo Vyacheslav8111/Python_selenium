@@ -65,10 +65,18 @@ class ContactHelper:
 		driver = self.app.driver
 		driver.find_element(By.NAME, "selected[]").click()
 
+	def select_contact_by_index(self, index):
+		driver = self.app.driver
+		driver.find_elements(By.NAME, "selected[]")[index].click()
+
 	def delete_first_contact(self):
 		driver = self.app.driver
+		self.delete_contact_by_index(0)
+
+	def delete_contact_by_index(self, index):
+		driver = self.app.driver
 		self.app.open_home_page()
-		self.select_first_contact()
+		self.select_contact_by_index(index)
 		# submit modification
 		driver.find_element(By.CSS_SELECTOR, ".left:nth-child(8) > input").click()
 		assert driver.switch_to.alert.text == "Delete 1 addresses?"
