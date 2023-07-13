@@ -44,9 +44,13 @@ class ContactHelper:
 		self.verify_change_field_value("address2", contact.address2)
 		self.verify_change_field_value("notes", contact.notes)
 
-	def modify_first_contact(self, new_contact_data):
+	def modify_first_contact(self):
 		driver = self.app.driver
-		self.select_first_contact()
+		self.modify_contact_by_index(0)
+
+	def modify_contact_by_index(self, index, new_contact_data):
+		driver = self.app.driver
+		self.select_contact_by_index(index)
 		# open modify_form
 		driver.find_element(By.XPATH, "//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
 		# fill contact form
