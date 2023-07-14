@@ -101,8 +101,8 @@ class ContactHelper:
 			for row in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
 				cells = row.find_elements(By.XPATH, ".//td")
 				id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
-				firstname = cells[2].text
 				lastname = cells[1].text
+				firstname = cells[2].text
 				self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
 		return list(self.contact_cache)
 
