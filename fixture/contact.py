@@ -98,8 +98,8 @@ class ContactHelper:
 			driver = self.app.driver
 			self.app.open_home_page()
 			self.contact_cache = []
-			for element in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
-				cells = element.find_elements(By.XPATH, ".//td")
+			for row in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
+				cells = row.find_elements(By.XPATH, ".//td")
 				firstname = cells[2].text
 				lastname = cells[1].text
 				# firstname = element.find_element(By.XPATH, ".//td[3]").text
