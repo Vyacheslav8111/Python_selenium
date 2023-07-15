@@ -99,9 +99,12 @@ class ContactHelper:
 			self.app.open_home_page()
 			self.contact_cache = []
 			for element in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
-				firstname = element.find_element(By.XPATH, ".//td[3]").text
-				lastname = element.find_element(By.XPATH, ".//td[2]").text
-				id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+				cells = element.find_elements(By.XPATH, ".//td")
+				firstname = cells[2].text
+				lastname = cells[1].text
+				# firstname = element.find_element(By.XPATH, ".//td[3]").text
+				# lastname = element.find_element(By.XPATH, ".//td[2]").text
+				id = cells[0].text
 				self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
 		return list(self.contact_cache)
 
