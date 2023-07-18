@@ -52,11 +52,11 @@ class ContactHelper:
 		driver = self.app.driver
 		self.select_contact_by_index(index)
 		# open modify_form
-		driver.find_element(By.XPATH, "//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+		driver.find_element(By.XPATH, ".//tr[2]/td[8]/a/img").click()
 		# fill contact form
 		self.fill_contact_form(new_contact_data)
 		# submit modification
-		driver.find_element(By.NAME, "update").click()
+		driver.find_element(By.XPATH, ".//form[1]/input[22]").click()
 		self.return_to_home_page()
 		self.contact_cache = None
 
@@ -100,9 +100,9 @@ class ContactHelper:
 			self.contact_cache = []
 			for row in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
 				cells = row.find_elements(By.XPATH, ".//td")
-				firstname = cells[2].text
+				id = cells[0].find_element(By.TAG_NAME, "input").get_attribute("value")
 				lastname = cells[1].text
-				id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
+				firstname = cells[2].text
 				self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
 		return list(self.contact_cache)
 
