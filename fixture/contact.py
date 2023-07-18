@@ -26,23 +26,11 @@ class ContactHelper:
 		driver = self.app.driver
 		# fill contact form
 		self.verify_change_field_value("firstname", contact.firstname)
-		self.verify_change_field_value("middlename", contact.middlename)
 		self.verify_change_field_value("lastname", contact.lastname)
-		self.verify_change_field_value("nickname", contact.nickname)
-		self.verify_change_field_value("title", contact.title)
-		self.verify_change_field_value("company", contact.company)
-		self.verify_change_field_value("address", contact.address)
-		self.verify_change_field_value("home", contact.home)
-		self.verify_change_field_value("mobile", contact.mobile)
-		self.verify_change_field_value("work", contact.work)
-		self.verify_change_field_value("work", contact.work)
-		self.verify_change_field_value("fax", contact.fax)
-		self.verify_change_field_value("email", contact.email)
-		self.verify_change_field_value("email2", contact.email2)
-		self.verify_change_field_value("email3", contact.email3)
-		self.verify_change_field_value("homepage", contact.homepage)
-		self.verify_change_field_value("address2", contact.address2)
-		self.verify_change_field_value("notes", contact.notes)
+		self.verify_change_field_value("home", contact.home_phone)
+		self.verify_change_field_value("mobile", contact.mobile_phone)
+		self.verify_change_field_value("work", contact.work_phone)
+		self.verify_change_field_value("phone2", contact.secondary_phone)
 
 	def modify_first_contact(self):
 		driver = self.app.driver
