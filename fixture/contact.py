@@ -36,17 +36,53 @@ class ContactHelper:
 		driver = self.app.driver
 		self.modify_contact_by_index(0)
 
-	def modify_contact_by_index(self, index, new_contact_data):
+	# def modify_contact_by_index(self, index, new_contact_data):
+	# 	driver = self.app.driver
+	# 	self.select_contact_by_index(index)
+	# 	# open modify_form
+	# 	driver.find_element(By.XPATH, ".//tr[2]/td[8]/a/img").click()
+	# 	# fill contact form
+	# 	self.fill_contact_form(new_contact_data)
+	# 	# submit modification
+	# 	driver.find_element(By.XPATH, ".//form[1]/input[22]").click()
+	# 	self.return_to_home_page()
+	# 	self.contact_cache = None
+
+	def modify_contact_by_index(self, index, new_contact_form):
 		driver = self.app.driver
-		self.select_contact_by_index(index)
-		# open modify_form
-		driver.find_element(By.XPATH, ".//tr[2]/td[8]/a/img").click()
-		# fill contact form
-		self.fill_contact_form(new_contact_data)
-		# submit modification
-		driver.find_element(By.XPATH, ".//form[1]/input[22]").click()
+		self.app.open_home_page()
+		self.open_contact_to_edit_by_index(index)
+		self.fill_contact_form(new_contact_form)
+		self.submit_contact_modification()
 		self.return_to_home_page()
-		self.contact_cache = None
+		self.contact_cashe = None
+
+	def modify_contact_by_id(self, id, new_contact_data):
+		driver = self.app.driver
+		self.app.open_home_page()
+		self.open_contact_to_edit_by_id(id)
+		self.fill_contact_form(new_contact_data)
+		self.submit_contact_modification()
+		self.return_to_home_page()
+		self.contact_cashe = None
+
+	def open_contact_to_edit_by_index(self, index):
+		driver = self.app.driver
+		self.app.open_home_page()
+		contact_elem = driver.find_elements(By.NAME, "entry")[index]
+		cells = contact_elem.find_elements(By.TAG_NAME, "td")[7]
+		cells.find_element(By.TAG_NAME, "a").click()
+
+	def submit_contact_modification(self):
+		driver = self.app.driver
+		driver.find_element(By.XPATH, "//form[1]/input[22]").click()
+
+	def open_contact_to_edit_by_id(self, id):
+		driver = self.app.driver
+		self.app.open_home_page()
+		driver.find_element(By.CSS_SELECTOR, "input[value='%s']" % id)
+		cells = driver.find_elements(By.TAG_NAME, "td")[7]
+		cells.find_element(By.TAG_NAME, "a").click()
 
 	def count_contact(self):
 		driver = self.app.driver
@@ -93,5 +129,7 @@ class ContactHelper:
 				firstname = cells[2].text
 				self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
 		return list(self.contact_cache)
+
+
 
 

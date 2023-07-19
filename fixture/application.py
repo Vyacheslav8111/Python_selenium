@@ -11,7 +11,7 @@ class Application:
 		self.session = SessionHelper(self)
 		self.group = GroupHelper(self)
 		self.contact = ContactHelper(self)
-		self.driver.implicitly_wait(20)
+		#self.driver.implicitly_wait(20)
 
 	def is_valid(self):
 		try:
