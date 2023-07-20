@@ -69,9 +69,8 @@ class ContactHelper:
 	def open_contact_to_edit_by_index(self, index):
 		driver = self.app.driver
 		self.app.open_home_page()
-		contact_elem = driver.find_elements(By.NAME, "entry")[index]
-		# contact_elem = driver.find_elements(By.NAME, "selected[]")[index]
-		cells = contact_elem.find_elements(By.TAG_NAME, "td")[7]
+		row = driver.find_elements(By.NAME, "entry")[index]
+		cells = row.find_elements(By.TAG_NAME, "td")[7]
 		cells.find_element(By.TAG_NAME, "a").click()
 
 	def submit_contact_modification(self):
