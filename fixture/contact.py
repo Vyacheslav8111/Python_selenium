@@ -57,19 +57,20 @@ class ContactHelper:
 		self.return_to_home_page()
 		self.contact_cashe = None
 
-	def modify_contact_by_id(self, id, new_contact_data):
-		driver = self.app.driver
-		self.app.open_home_page()
-		self.open_contact_to_edit_by_id(id)
-		self.fill_contact_form(new_contact_data)
-		self.submit_contact_modification()
-		self.return_to_home_page()
-		self.contact_cashe = None
+	# def modify_contact_by_id(self, id, new_contact_data):
+	# 	driver = self.app.driver
+	# 	self.app.open_home_page()
+	# 	self.open_contact_to_edit_by_id(id)
+	# 	self.fill_contact_form(new_contact_data)
+	# 	self.submit_contact_modification()
+	# 	self.return_to_home_page()
+	# 	self.contact_cashe = None
 
 	def open_contact_to_edit_by_index(self, index):
 		driver = self.app.driver
 		self.app.open_home_page()
 		contact_elem = driver.find_elements(By.NAME, "entry")[index]
+		# contact_elem = driver.find_elements(By.NAME, "selected[]")[index]
 		cells = contact_elem.find_elements(By.TAG_NAME, "td")[7]
 		cells.find_element(By.TAG_NAME, "a").click()
 
