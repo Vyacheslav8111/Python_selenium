@@ -115,6 +115,24 @@ class ContactHelper:
 		driver = self.app.driver
 		driver.find_element(By.XPATH, "//div[@id='content']/div/i/a").click()
 
+	def get_contact_info_from_edit_page(self, index):
+		driver = self.app.driver
+		self.open_contact_to_edit_by_index(index)
+		firstname = driver.find_element(By.NAME, "firstname"). get_attribute("value")
+		lastname = driver.find_element(By.NAME, "lastname").get_attribute("value")
+		address = driver.find_element(By.NAME,"address").get_attribute("value")
+		id = driver.find_element(By.NAME,"id").get_attribute("value")
+		home_phone = driver.find_element(By.NAME,"home").get_attribute("value")
+		work_phone = driver.find_element(By.NAME,"work").get_attribute("value")
+		mobile_phone = driver.find_element(By.NAME,"mobile").get_attribute("value")
+		secondary_phone = driver.find_element(By.NAME,"phone2").get_attribute("value")
+		return Contact(firstname=firstname, lastname=lastname, address=address,
+                       id=id,
+                       home_phone=home_phone, work_phone=work_phone,
+                       mobile_phone=mobile_phone, secondary_phone=secondary_phone)
+
+
+
 	contact_cache = None
 
 	def get_contact_list(self):
@@ -122,12 +140,15 @@ class ContactHelper:
 			driver = self.app.driver
 			self.app.open_home_page()
 			self.contact_cache = []
-			for row in driver.find_elements(By.XPATH, ".//tr[@name='entry']"):
-				cells = row.find_elements(By.XPATH, ".//td")
+			for row in driver.find_elements(By.NAME, "entry"):
+				cells = row.find_elements(By.TAG_NAME, "td")
 				id = cells[0].find_element(By.TAG_NAME, "input").get_attribute("value")
 				lastname = cells[1].text
 				firstname = cells[2].text
-				self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+				address = cells[3].text
+				all_phones = cells[5].text
+				self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, address=address,id=id,
+												  all_phones_from_home_page=all_phones))
 		return list(self.contact_cache)
 
 
