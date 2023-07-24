@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -73,6 +74,13 @@ class ContactHelper:
 		cells = row.find_elements(By.TAG_NAME, "td")[7]
 		cells.find_element(By.TAG_NAME, "a").click()
 
+	def open_contact_view_by_index(self, index):
+		driver = self.app.driver
+		self.app.open_home_page()
+		row = driver.find_elements(By.NAME, "entry")[index]
+		cell = row.find_elements(By.TAG_NAME, "td")[6]
+		cell.find_element(By.TAG_NAME, "a").click()
+
 	def submit_contact_modification(self):
 		driver = self.app.driver
 		driver.find_element(By.XPATH, "//form[1]/input[22]").click()
@@ -130,6 +138,19 @@ class ContactHelper:
 					   id=id,
 					   home_phone=home_phone, work_phone=work_phone,
 					   mobile_phone=mobile_phone, secondary_phone=secondary_phone)
+
+	def get_contact_from_view_page(self, index):
+		driver = self.app.driver
+		self.open_contact_view_by_index(index)
+		text = driver.find_element(By.ID, "content").text
+		print(text)
+		home_phone = re.search("H: (.*)", text).group(1)
+		mobile_phone = re.search("M: (.*)", text).group(1)
+		work_phone = re.search("W: (.*)", text).group(1)
+		secondary_phone = re.search("P: (.*)", text).group(1)
+		all_phones_view_page = "\n".join((home_phone, mobile_phone, work_phone, secondary_phone))
+		return Contact(all_phones_from_view_page = all_phones_view_page)
+
 
 	contact_cache = None
 
