@@ -3,6 +3,10 @@ from model.group import Group
 
 
 def test_add_group(app):
+
+    # randomization
+
+    testdata = []
     old_groups = app.group.get_group_list()
     group = Group(name="s", header="a", footer="f")
     app.group.create(group)
