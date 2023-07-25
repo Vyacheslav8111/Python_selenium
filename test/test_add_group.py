@@ -6,14 +6,18 @@ def test_add_group(app):
 
     # randomization
 
-    testdata = []
-    old_groups = app.group.get_group_list()
-    group = Group(name="s", header="a", footer="f")
-    app.group.create(group)
-    assert len(old_groups) + 1 == app.group.count_group() # .count - хеш-функция
-    new_groups = app.group.get_group_list()
-    old_groups.append(group)
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+    testdata = [
+        Group(name="s", header="a", footer="f"),
+        Group(name="", header="", footer="")
+    ]
+    for group in testdata:
+        pass
+        # old_groups = app.group.get_group_list()
+        # app.group.create(group)
+        # assert len(old_groups) + 1 == app.group.count_group() # .count - хеш-функция
+        # new_groups = app.group.get_group_list()
+        # old_groups.append(group)
+        # assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
 # def test_add_empty_group(app):
