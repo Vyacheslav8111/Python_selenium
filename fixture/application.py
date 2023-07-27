@@ -5,12 +5,21 @@ from fixture.contact import ContactHelper
 
 
 class Application:
-	def __init__(self):
+	def __init__(self, browser, base_url):
+		if browser == "chrome":
+			self.driver = webdriver.Chrome()
+		elif browser == 'firefox':
+			self.driver = webdriver.Firefox()
+		elif browser == 'ie':
+			self.driver = webdriver.Ie()
+		else:
+			raise ValueError("Error %s" % browser)
 		self.driver = webdriver.Chrome()
 		self.session = SessionHelper(self)
 		self.group = GroupHelper(self)
 		self.contact = ContactHelper(self)
 		self.driver.maximize_window()
+		self.base_url = base_url
 		#self.driver.implicitly_wait(20)
 
 
@@ -24,7 +33,7 @@ class Application:
 
 	def open_home_page(self):
 		driver = self.driver
-		driver.get("http://localhost/addressbook/")
+		driver.get(self.base_url)
 
 	def close_browser(self):
 		self.driver.quit()
