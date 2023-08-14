@@ -1,8 +1,18 @@
 from model.group import Group
+from timeit import timeit
 
+
+# def test_group_list(app, db):
+# 	ui_list = app.group.get_group_list()
+#
+# 	def clean(group):
+# 		return Group(id=group.id, name=group.name.strip())
+#
+# 	db_list = map(clean, db.get_group_list())
+# 	assert sorted(ui_list, key=Group.id_or_max) == sorted(db_list, key=Group.id_or_max)
 
 def test_group_list(app, db):
-	ui_list = app.group.get_group_list()
+	print(timeit(lambda:app.group.get_group_list()))
 
 	def clean(group):
 		return Group(id=group.id, name=group.name.strip())
@@ -10,5 +20,3 @@ def test_group_list(app, db):
 	db_list = map(clean, db.get_group_list())
 	assert sorted(ui_list, key=Group.id_or_max) == sorted(db_list, key=Group.id_or_max)
 
-	# Доработка тестов таким обазом, чтобы списки групп загружались
-# через БД, а не через графический интерфейс
