@@ -22,8 +22,6 @@ class Application:
 		self.base_url = base_url
 		#self.driver.implicitly_wait(20)
 
-
-
 	def is_valid(self):
 		try:
 			self.driver.current_url
